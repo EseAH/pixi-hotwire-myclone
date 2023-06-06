@@ -1,4 +1,4 @@
-import { Application, Loader, Sprite } from 'pixi.js'
+import { Application, Container, Loader, Point, Sprite } from 'pixi.js'
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -33,20 +33,37 @@ window.addEventListener('resize', ()=>{
 })
 window.dispatchEvent(new Event('resize'))
 
-Loader.shared.add({url: "./kiss.png", name: "myDino"})
-Loader.shared.add({url: "./clampy.png", name: "myClampy"});
-//const clampy: Sprite = Sprite.from("myDino");
+Loader.shared.add({url: "./kisspng.png", name: "myDino"})
+Loader.shared.add({url: "./fire.png", name: "myFire"});
 
 Loader.shared.onComplete.add(()=>{
-	const clampy: Sprite = Sprite.from("myClampy");
-	//clampy.anchor.set(0.5);
-	console.log("Hola mundo!", clampy.width, clampy.height);
-	clampy.x = 100;
-	clampy.y = 100;
+	const dino: Sprite = Sprite.from("myDino");
+	const fire: Sprite = Sprite.from("myFire");
+	
+	dino.scale.set(0.5,0.5)
+	fire.scale.set(0.3,0.3)
+	fire.angle = 10
+	fire.position.set(570, 110)
 
-	clampy.scale.x = 0.5
-	clampy.scale.y = 0.5
+	//app.stage.addChild(dino); // de este modo se agregaria directamente a la pantalla
 
-app.stage.addChild(clampy);
+//--Declaramos un container para pegar dino y fire en el container y no directo a la pantalla--
+	const dinoWithFire: Container = new Container()
+
+	dinoWithFire.addChild(dino);
+	dinoWithFire.addChild(fire);
+//--Se modifica todo el container junto que contiene a dino y fire
+	dinoWithFire.scale.set(0.4, 0.4)
+	dinoWithFire.x = 90
+	dinoWithFire.y = 100
+	//Como pedir la posicion en pantalla del elemento fire
+	console.log(fire.toGlobal(new Point()));
+	console.log(fire.parent.toGlobal(fire.position));
+	//Mover a un punto dado de la pantalla
+	// const aux = fire.parent.toLocal(new Point(0,0))
+	// fire.position.x = aux.x
+	// fire.position.y = aux.y
+	
+	app.stage.addChild(dinoWithFire) //se agrega el padre(container) a pantalla
 })
 Loader.shared.load();

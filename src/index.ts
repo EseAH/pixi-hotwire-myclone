@@ -1,4 +1,5 @@
 import { Application, Container, Loader, Point, Sprite } from 'pixi.js'
+import { assets } from './assets';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -33,8 +34,7 @@ window.addEventListener('resize', ()=>{
 })
 window.dispatchEvent(new Event('resize'))
 
-Loader.shared.add({url: "./kisspng.png", name: "myDino"})
-Loader.shared.add({url: "./fire.png", name: "myFire"});
+Loader.shared.add(assets)
 
 Loader.shared.onComplete.add(()=>{
 	const dino: Sprite = Sprite.from("myDino");

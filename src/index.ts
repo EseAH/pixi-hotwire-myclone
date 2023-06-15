@@ -1,5 +1,6 @@
-import { Application, Container, Loader, Point, Sprite } from 'pixi.js'
+import { Application, Loader } from 'pixi.js'
 import { assets } from './assets';
+import { DinoFire } from './DinoFire';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -37,28 +38,21 @@ window.dispatchEvent(new Event('resize'))
 Loader.shared.add(assets)
 
 Loader.shared.onComplete.add(()=>{
-	const dino: Sprite = Sprite.from("myDino");
-	const fire: Sprite = Sprite.from("myFire");
-	
-	dino.scale.set(0.5,0.5)
-	fire.scale.set(0.3,0.3)
-	fire.angle = 10
-	fire.position.set(570, 110)
+	//aca iba lo de DinoFire.ts
 
 	//app.stage.addChild(dino); // de este modo se agregaria directamente a la pantalla
 
 //--Declaramos un container para pegar dino y fire en el container y no directo a la pantalla--
-	const dinoWithFire: Container = new Container()
+	const dinoWithFire: DinoFire = new DinoFire()
 
-	dinoWithFire.addChild(dino);
-	dinoWithFire.addChild(fire);
+	
 //--Se modifica todo el container junto que contiene a dino y fire
 	dinoWithFire.scale.set(0.4, 0.4)
 	dinoWithFire.x = 90
 	dinoWithFire.y = 100
 	//Como pedir la posicion en pantalla del elemento fire
-	console.log(fire.toGlobal(new Point()));
-	console.log(fire.parent.toGlobal(fire.position));
+	//console.log(fire.toGlobal(new Point()));
+	//console.log(fire.parent.toGlobal(fire.position));
 	//Mover a un punto dado de la pantalla
 	// const aux = fire.parent.toLocal(new Point(0,0))
 	// fire.position.x = aux.x
